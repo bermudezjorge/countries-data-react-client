@@ -8,7 +8,7 @@ const SearchInputCon = styled.div`
   display: flex;
   align-items: center;
   padding-left: 1.5rem;
-  box-shadow: 0px 0px 18px -10px ${props => props.theme.inputColor};
+  box-shadow: ${props => props.theme.boxShadow};
   border-radius: ${props => props.theme.borderRadius};
   opacity: 0.7;
   &:focus-within {

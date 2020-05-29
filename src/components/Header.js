@@ -9,7 +9,11 @@ const HeaderCon = styled.header`
   transition: 0.2s background-color;
   background-color: ${props => props.theme.elementsColor};
   padding: 1.5rem 0;
-  box-shadow: 0px -20px 8px 17px ${props => props.theme.inputColor};
+  box-shadow: ${props => props.theme.boxShadow};
+`
+
+const StyledIcon = styled(FontAwesomeIcon)`
+  color: ${props => props.theme.textColor};
 `
 
 const Title = styled.h1`
@@ -17,7 +21,7 @@ const Title = styled.h1`
   font-size: 25px;
   font-family: NunitoBlack;
   transition: 0.2s color;
-  color: ${props => props.theme.textColor}
+  color: ${props => props.theme.textColor};
 `
 
 const ButtonStyled = styled.button`
@@ -25,7 +29,6 @@ const ButtonStyled = styled.button`
   font-size: ${props => props.theme.detailtPage};
   font-family: NunitoBlack;
   background-color: transparent;
-  outline: none;
   transition: 0.2s color;
   color: ${props => props.theme.textColor};
   border: none;
@@ -37,7 +40,7 @@ const Header = ({ title, theme, switchMode }) => (
     <Title>{title}</Title>
 
     <ButtonStyled onClick={() => switchMode(theme)}>
-      <FontAwesomeIcon icon={theme === 'Dark Mode' ? 'moon' : 'sun'} />
+      <StyledIcon icon={theme === 'Dark Mode' ? 'moon' : 'sun'} />
         {' ' + theme}
     </ButtonStyled>
   </HeaderCon>
