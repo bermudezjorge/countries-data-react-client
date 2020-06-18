@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState, useContext } from 'react'
+import styled, { keyframes } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CountryContext from '../context/country-context'
 
 const RegionButton = styled.div`
   position: relative;
@@ -30,6 +31,17 @@ const RegionButtonText = styled.h1`
   color: ${props => props.theme.textColor};
 `
 
+const fadeIn = keyframes`
+  from {
+    transform: scale(0.1) translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0%);
+    opacity: 1;
+  }
+`;
+
 const MenuRegions = styled.ul`
   width: 100%;
   position: absolute;
@@ -42,6 +54,7 @@ const MenuRegions = styled.ul`
   border-radius: ${props => props.theme.borderRadius};
   box-shadow: ${props => props.theme.boxShadow};
   padding: 1rem 1.5rem;
+  animation: 0.2s ${fadeIn} linear;
   &:before {
     content: '';
     width: 100%;
@@ -68,6 +81,10 @@ const RegionOption = styled.li`
 const RegionFilter = () => {
   const [showMenu, setShowMenu] = useState(false)
 
+  const { setFilter } = useContext(CountryContext)
+
+  const regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania']
+
   return (
     <RegionButton 
       onMouseEnter={() => setShowMenu(true)}
@@ -82,11 +99,17 @@ const RegionFilter = () => {
 
       {showMenu && (
         <MenuRegions>
-          <RegionOption>Africa</RegionOption>
-          <RegionOption>America</RegionOption>
-          <RegionOption>Asia</RegionOption>
-          <RegionOption>Europe</RegionOption>
-          <RegionOption>Oceania</RegionOption>
+          {regions.map(region => (
+            <RegionOption
+              key={region}
+              onClick={() => {
+                setFilter({ by: 'region', filter: region.toLowerCase() })
+                setShowMenu(false)
+              }}
+              >
+                {region}
+            </RegionOption>
+          ))}
         </MenuRegions>
       )}
     </RegionButton>

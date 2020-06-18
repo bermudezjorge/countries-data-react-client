@@ -2,10 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 const ErrorMessage = styled.h1`
+  text-align: center;
   margin-top: 10%;
   height: 60vh;
   font-family: NunitoBlack;
-  font-size: ${props => props.theme.detailPage};  
+  font-size: 30px;  
   color: ${props => props.theme.textColor};
 `
 

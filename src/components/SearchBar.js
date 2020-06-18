@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CountryContext from '../context/country-context'
 
 const SearchInputCon = styled.div`
   background-color: ${props => props.theme.elementsColor};
@@ -35,12 +36,15 @@ const SearchInput = styled.input`
   }
 `
 
-const SearchBar = () => (
-  <SearchInputCon>
-    <StyledIcon icon="search" />
-    <SearchInput placeholder="Search a country..."/>
-  </SearchInputCon>
-)
+const SearchBar = () => {
+  const { setFilter } = useContext(CountryContext)
+  return (
+    <SearchInputCon>
+      <StyledIcon icon="search" />
+        <SearchInput placeholder="Search a country..." onKeyUp={e => setFilter({ by: 'country', filter: e.target.value })}/>
+    </SearchInputCon>
+  )
+}
 
 
 export default SearchBar
