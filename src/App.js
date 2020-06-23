@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import CountryContext from './context/country-context'
 import Header from './components/Header'
-import MainContent from './components/MainContent'
-import CountryView from './components/CountryView'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import { BrowserRouter, Switch, Route, withRouter } from "react-router-dom"
@@ -11,6 +9,13 @@ import { faMoon, faSun, faSearch, faArrowAltCircleDown, faArrowAltCircleRight, f
 
 library.add(faMoon, faSun, faSearch, faArrowAltCircleDown, faArrowAltCircleRight, faArrowLeft)
 
+const MainContent = React.lazy(
+  () => import('./components/MainContent')
+)
+
+const CountryView = React.lazy(
+  () => import('./components/CountryView')
+)
 
 const lightTheme = {
   elementsColor: 'hsl(0, 0%, 100%)',
@@ -47,16 +52,18 @@ const Page = styled.div`
 const AnimatedSwitch = withRouter(({ location }) => (
   <TransitionGroup>
     <CSSTransition key={location.key} classNames="fade" timeout={1}>
+      <Suspense fallback={<h1>Loading components...</h1>}>
       <Switch location={location}>
         <Route path="/" exact component={MainContent} />
         <Route path="/country/:name" component={CountryView} />
       </Switch>
+      </Suspense>
     </CSSTransition>
   </TransitionGroup>
 ));
 
 const App = () => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme'))
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'Dark Mode')
   const [filter, setFilter] = useState({ by: 'country', filter: 'all'})
 
   const [showMenu, setShowMenu] = useState(false)
