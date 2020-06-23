@@ -1,6 +1,7 @@
 import React, { useState, Suspense } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import CountryContext from './context/country-context'
+import LoadingComponent from './LoadingComponent'
 import Header from './components/Header'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { TransitionGroup, CSSTransition } from "react-transition-group"
@@ -52,7 +53,7 @@ const Page = styled.div`
 const AnimatedSwitch = withRouter(({ location }) => (
   <TransitionGroup>
     <CSSTransition key={location.key} classNames="fade" timeout={1}>
-      <Suspense fallback={<h1>Loading components...</h1>}>
+      <Suspense fallback={<LoadingComponent title="Loading UI..."/>}>
       <Switch location={location}>
         <Route path="/" exact component={MainContent} />
         <Route path="/country/:name" component={CountryView} />
