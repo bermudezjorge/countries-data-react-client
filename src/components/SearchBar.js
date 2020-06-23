@@ -12,7 +12,14 @@ const SearchInputCon = styled.div`
   box-shadow: ${props => props.theme.boxShadow};
   border-radius: ${props => props.theme.borderRadius};
   opacity: 0.7;
+  box-sizing: border-box;
   &:focus-within {
+    opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    margin-top: 5%;
     opacity: 1;
   }
 `

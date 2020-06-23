@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CountryContext from '../context/country-context'
@@ -16,7 +16,14 @@ const RegionButton = styled.div`
   box-shadow: ${props => props.theme.boxShadow};
   border-radius: ${props => props.theme.borderRadius};
   opacity: 0.7;
+  z-index: 9999;
   &:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    width: 60%;
+    margin: 12% 0;
     opacity: 1;
   }
 `
@@ -79,35 +86,33 @@ const RegionOption = styled.li`
 `
 
 const RegionFilter = () => {
-  const [showMenu, setShowMenu] = useState(false)
-
-  const { setFilter } = useContext(CountryContext)
+  const { setFilter, menu } = useContext(CountryContext)
 
   const regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania']
 
   return (
     <RegionButton 
-      onMouseEnter={() => setShowMenu(true)}
-      onMouseLeave={() => setShowMenu(false)}
+      onMouseEnter={() => menu.setShowMenu(true)}
+      onMouseLeave={() => menu.setShowMenu(false)}
     >
       <RegionButtonText>
         Filter by Region 
       </RegionButtonText>
       <StyledIcon 
-        icon={showMenu ? 'arrow-alt-circle-down' : 'arrow-alt-circle-right'}
+        icon={menu.showMenu ? 'arrow-alt-circle-down' : 'arrow-alt-circle-right'}
       />
 
-      {showMenu && (
+      {menu.showMenu && (
         <MenuRegions>
           {regions.map(region => (
             <RegionOption
               key={region}
               onClick={() => {
                 setFilter({ by: 'region', filter: region.toLowerCase() })
-                setShowMenu(false)
+                menu.setShowMenu(false)
               }}
-              >
-                {region}
+            >
+              {region}
             </RegionOption>
           ))}
         </MenuRegions>

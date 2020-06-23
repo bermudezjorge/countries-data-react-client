@@ -7,9 +7,9 @@ import CountryView from './components/CountryView'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import { BrowserRouter, Switch, Route, withRouter } from "react-router-dom"
-import { faMoon, faSun, faSearch, faArrowAltCircleDown, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons'
+import { faMoon, faSun, faSearch, faArrowAltCircleDown, faArrowAltCircleRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faMoon, faSun, faSearch, faArrowAltCircleDown, faArrowAltCircleRight)
+library.add(faMoon, faSun, faSearch, faArrowAltCircleDown, faArrowAltCircleRight, faArrowLeft)
 
 
 const lightTheme = {
@@ -59,6 +59,8 @@ const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme'))
   const [filter, setFilter] = useState({ by: 'country', filter: 'all'})
 
+  const [showMenu, setShowMenu] = useState(false)
+
   if(localStorage.getItem('theme') === null) {
     localStorage.setItem('theme', 'Dark Mode')
   }
@@ -79,12 +81,16 @@ const App = () => {
   return (
     <CountryContext.Provider value={{
       search: filter,
-      setFilter: filter => setFilter(filter)
+      setFilter: filter => setFilter(filter),
+      menu: {
+        showMenu: showMenu,
+        setShowMenu: setShowMenu
+      }
     }}>
       <ThemeProvider theme={theme === 'Dark Mode' ? lightTheme : darkTheme}>
         <Page>
-          <Header title="Kountry" switchMode={switchMode} theme={theme} />
           <BrowserRouter>
+            <Header title="Kountry" switchMode={switchMode} theme={theme} />
             <AnimatedSwitch />
           </BrowserRouter>
         </Page>

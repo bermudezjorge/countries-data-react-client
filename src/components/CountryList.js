@@ -11,10 +11,24 @@ const CountrysDataCon = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 22%);
   grid-column-gap: 4%;
-  padding-bottom: 15%;
+  padding-bottom: 7%;
+
+  @media (max-width: 640px) {
+    width: 90%;
+    grid-template-columns: 100%;
+  } 
 `
 
 const Loading = styled.div`
+  text-align: center;
+  margin-top: 10%;
+  height: 60vh;
+  font-family: NunitoBlack;
+  font-size: 30px;
+  color: ${props => props.theme.textColor};
+`
+
+const NotFound = styled.div`
   text-align: center;
   margin-top: 10%;
   height: 60vh;
@@ -49,21 +63,27 @@ const CountrysData = () => {
 
   return (
     <CountrysDataCon key="countries">
-      {data && data.map(countryData => (
-          <CountryBox key={countryData.name} {...countryData} />
-      ))}
+      {
+        Array.isArray(data) ? (
+          <>
+            {data && data.map(countryData => (
+              <CountryBox key={countryData.name} {...countryData} />
+            ))}
+          </>
+        ) : (
+          <NotFound>{data.message}</NotFound>
+        )
+      }
     </CountrysDataCon>
   )
 }
 
-const CountryList = () => {
-  return (
-    <Suspense fallback={<Loading>Loading...</Loading>}>
-      <MyErrorBoundary>
-        <CountrysData />
-      </MyErrorBoundary>
-    </Suspense>
-  )
-}
+const CountryList = () => (
+  <Suspense fallback={<Loading>Loading...</Loading>}>
+    <MyErrorBoundary>
+      <CountrysData/>
+    </MyErrorBoundary>
+  </Suspense>
+)
 
 export default CountryList
