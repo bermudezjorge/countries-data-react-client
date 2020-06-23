@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import CountryContext from './context/country-context'
-import LoadingComponent from './LoadingComponent'
+import LoadingComponent from './components/LoadingComponent'
 import Header from './components/Header'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { TransitionGroup, CSSTransition } from "react-transition-group"
